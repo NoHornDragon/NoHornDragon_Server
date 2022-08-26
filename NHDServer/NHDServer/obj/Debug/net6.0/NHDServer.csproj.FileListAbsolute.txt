@@ -1,0 +1,15 @@
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\bin\Debug\net6.0\NHDServer.exe
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\bin\Debug\net6.0\NHDServer.deps.json
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\bin\Debug\net6.0\NHDServer.runtimeconfig.json
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\bin\Debug\net6.0\NHDServer.dll
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\bin\Debug\net6.0\NHDServer.pdb
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.csproj.AssemblyReference.cache
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.GeneratedMSBuildEditorConfig.editorconfig
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.AssemblyInfoInputs.cache
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.AssemblyInfo.cs
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.csproj.CoreCompileInputs.cache
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.dll
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\refint\NHDServer.dll
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.pdb
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\NHDServer.genruntimeconfig.cache
+E:\dev\NoHornDragon_Server\NHDServer\NHDServer\obj\Debug\net6.0\ref\NHDServer.dll
