@@ -13,6 +13,9 @@ namespace NHDServer
 
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
 
+        public delegate void PacketHandler(int fromClient, Packet packet);
+        public static Dictionary<int, PacketHandler> packetHandlers;
+
         public static TcpListener tcpListener;
 
         public static void Start(int maxPlayer, int port)
@@ -55,6 +58,12 @@ namespace NHDServer
             {
                 clients.Add(i, new Client(i));
             }
+
+            packetHandlers = new Dictionary<int, PacketHandler>()
+            {
+                {(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived }
+            };
+            Console.WriteLine($"Initialize packets");
         }
     }
 }
