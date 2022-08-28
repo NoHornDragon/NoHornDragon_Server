@@ -21,5 +21,12 @@ namespace NHDServer
             }
             // TODO : send player into the game
         }
+
+        public static void UDPTestReceived(int fromClient, Packet packet)
+        {
+            string msg = packet.ReadString();
+
+            Console.WriteLine($"Message packet via UDP : {msg}");
+        }
     }
 }

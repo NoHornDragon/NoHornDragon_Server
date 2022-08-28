@@ -11,11 +11,13 @@ namespace NHDServer
         public static int dataBuferSize = 4096;
         public int id;
         public TCP tcp;
+        public UDP udp;
 
         public Client(int clientId)
         {
             id = clientId;
             tcp = new TCP(id);
+            udp = new UDP(id);
         }
 
         public class TCP
@@ -137,5 +139,42 @@ namespace NHDServer
 
         }
 
+
+        public class UDP
+        {
+            public IPEndPoint endPoint;
+            private int id;
+
+            public UDP(int inputId)
+            {
+                id = inputId;
+            }
+
+            public void Connect(IPEndPoint ipEndPoint)
+            {
+                endPoint = ipEndPoint;
+                ServerSend.UDPTest(id);
+            }
+
+            public void SendData(Packet packet)
+            {
+                Server.SendUDPData(endPoint, packet);
+            }
+
+            public void HandleData(Packet packetData)
+            {
+                int packetLength = packetData.ReadInt();
+                byte[] packetBytes = packetData.ReadBytes(packetLength);
+
+                ThreadManager.ExecuteOnMainThread(() =>
+                {
+                    using (Packet packet = new Packet(packetBytes))
+                    {
+                        int packetId = packet.ReadInt();
+                        Server.packetHandlers[packetId](id, packet);
+                    }
+                });
+            }
+        }
     }
 }

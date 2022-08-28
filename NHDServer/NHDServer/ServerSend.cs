@@ -15,6 +15,14 @@ namespace NHDServer
             Server.clients[toClient].tcp.SendData(packet);
         }
 
+        private static void SendUDPData(int toClient, Packet packet)
+        {
+            packet.WriteLength();
+            Server.clients[toClient].udp.SendData(packet);
+        }
+
+
+
         private static void SendTCPDataToAll(Packet packet)
         {
             packet.WriteLength();
@@ -34,6 +42,26 @@ namespace NHDServer
             }
         }
 
+        private static void SendUDPDataToAll(Packet packet)
+        {
+            packet.WriteLength();
+            for (int i = 0; i < Server.MaxPlayers; i++)
+            {
+                Server.clients[i].udp.SendData(packet);
+            }
+        }
+
+        private static void SendUDPDataToAll(int exceptClient, Packet packet)
+        {
+            packet.WriteLength();
+            for (int i = 0; i < Server.MaxPlayers; i++)
+            {
+                if (i == exceptClient) continue;
+                Server.clients[i].udp.SendData(packet);
+            }
+        }
+
+        #region Packets
         public static void Welcome(int toClient, string msg)
         {
             using (Packet packet = new Packet((int)ServerPackets.welcome))
@@ -44,5 +72,16 @@ namespace NHDServer
                 SendTCPData(toClient, packet);
             }
         }
+
+        public static void UDPTest(int toClient)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.udpTest))
+            {
+                packet.Write("A test packet for UDP");
+
+                SendUDPData(toClient, packet);
+            }
+        }
+        #endregion
     }
 }
