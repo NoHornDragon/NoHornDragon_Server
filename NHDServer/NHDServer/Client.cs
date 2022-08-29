@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 
 namespace NHDServer
 {
@@ -10,6 +11,9 @@ namespace NHDServer
     {
         public static int dataBuferSize = 4096;
         public int id;
+
+        public Player player;
+
         public TCP tcp;
         public UDP udp;
 
@@ -153,7 +157,6 @@ namespace NHDServer
             public void Connect(IPEndPoint ipEndPoint)
             {
                 endPoint = ipEndPoint;
-                ServerSend.UDPTest(id);
             }
 
             public void SendData(Packet packet)
@@ -174,6 +177,32 @@ namespace NHDServer
                         Server.packetHandlers[packetId](id, packet);
                     }
                 });
+            }
+        }
+
+        public void SendIntoGame(string _playerName)
+        {
+            player = new Player(id, _playerName, new Vector3(0, 0, 0));
+
+            foreach(Client _client in Server.clients.Values)
+            {
+                if(_client.player != null)
+                {
+                    if(_client.id != id)
+                    {
+                        ServerSend.SpawnPlayer(id, _client.player);
+                    }
+                }
+            }
+
+            // send new player info to all the other player
+            foreach (Client _client in Server.clients.Values)
+            {
+                if (_client.player != null)
+                {
+                    ServerSend.SpawnPlayer(_client.id, player);
+                    
+                }
             }
         }
     }

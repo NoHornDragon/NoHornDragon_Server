@@ -9,77 +9,103 @@ namespace NHDServer
     class ServerSend
     {
 
-        private static void SendTCPData(int toClient, Packet packet)
+        private static void SendTCPData(int _toClient, Packet _packet)
         {
-            packet.WriteLength();
-            Server.clients[toClient].tcp.SendData(packet);
+            _packet.WriteLength();
+            Server.clients[_toClient].tcp.SendData(_packet);
         }
 
-        private static void SendUDPData(int toClient, Packet packet)
+        private static void SendUDPData(int _toClient, Packet _packet)
         {
-            packet.WriteLength();
-            Server.clients[toClient].udp.SendData(packet);
+            _packet.WriteLength();
+            Server.clients[_toClient].udp.SendData(_packet);
         }
 
 
 
-        private static void SendTCPDataToAll(Packet packet)
+        private static void SendTCPDataToAll(Packet _packet)
         {
-            packet.WriteLength();
-            for(int i = 0; i < Server.MaxPlayers; i++)
+            _packet.WriteLength();
+            for (int i = 1; i <= Server.MaxPlayers; i++)
             {
-                Server.clients[i].tcp.SendData(packet);
+                Server.clients[i].tcp.SendData(_packet);
             }
         }
 
-        private static void SendTCPDataToAll(int exceptClient, Packet packet)
+        private static void SendTCPDataToAll(int _exceptClient, Packet _packet)
         {
-            packet.WriteLength();
-            for (int i = 0; i < Server.MaxPlayers; i++)
+            _packet.WriteLength();
+            for (int i = 1; i <= Server.MaxPlayers; i++)
             {
-                if (i == exceptClient) continue;
-                Server.clients[i].tcp.SendData(packet);
+                if (i == _exceptClient) continue;
+                Server.clients[i].tcp.SendData(_packet);
             }
         }
 
-        private static void SendUDPDataToAll(Packet packet)
+        private static void SendUDPDataToAll(Packet _packet)
         {
-            packet.WriteLength();
-            for (int i = 0; i < Server.MaxPlayers; i++)
+            _packet.WriteLength();
+            for (int i = 1; i <= Server.MaxPlayers; i++)
             {
-                Server.clients[i].udp.SendData(packet);
+                Server.clients[i].udp.SendData(_packet);
             }
         }
 
-        private static void SendUDPDataToAll(int exceptClient, Packet packet)
+        private static void SendUDPDataToAll(int _exceptClient, Packet _packet)
         {
-            packet.WriteLength();
-            for (int i = 0; i < Server.MaxPlayers; i++)
+            _packet.WriteLength();
+            for (int i = 1; i <= Server.MaxPlayers; i++)
             {
-                if (i == exceptClient) continue;
-                Server.clients[i].udp.SendData(packet);
+                if (i == _exceptClient) continue;
+                Server.clients[i].udp.SendData(_packet);
             }
         }
 
         #region Packets
-        public static void Welcome(int toClient, string msg)
+        public static void Welcome(int _toClient, string _msg)
         {
             using (Packet packet = new Packet((int)ServerPackets.welcome))
             {
-                packet.Write(msg);
-                packet.Write(toClient);
+                packet.Write(_msg);
+                packet.Write(_toClient);
 
-                SendTCPData(toClient, packet);
+                SendTCPData(_toClient, packet);
+            }
+        }
+        
+        public static void SpawnPlayer(int _toClient, Player _player)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.spawnPlayer))
+            {
+                packet.Write(_player.id);
+                packet.Write(_player.username);
+                packet.Write(_player.position);
+                packet.Write(_player.rotation);
+
+                SendTCPData(_toClient, packet);
             }
         }
 
-        public static void UDPTest(int toClient)
+        public static void PlayerPosition(Player _player)
         {
-            using (Packet packet = new Packet((int)ServerPackets.udpTest))
+            using (Packet packet = new Packet((int)ServerPackets.playerPosition))
             {
-                packet.Write("A test packet for UDP");
+                packet.Write(_player.id);
+                packet.Write(_player.position);
 
-                SendUDPData(toClient, packet);
+                Console.WriteLine($"{_player.id} position is {_player.position}");
+                SendUDPDataToAll(packet);
+            }
+        }
+
+        public static void PlayerRotation(Player _player)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.playerPosition))
+            {
+                packet.Write(_player.id);
+                packet.Write(_player.rotation);
+
+                SendUDPDataToAll(_player.id, packet);
             }
         }
         #endregion

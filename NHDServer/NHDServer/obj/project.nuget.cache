@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "VY5EsLPd21jZv5WGm/UT8rfXWXwl4fImvON35Ic85zzgGJ+nYiYSQpopaSEW+ApWQZE1oeBUvJM8p+cWfEyIRg==",
+  "dgSpecHash": "798ZqnGqlrrl8mbnKR3tNUgTNWwjevW+iGIfC/j9xtdTj7sGcWNn3e5y04ffxbL5w4ndnh0D68+wEsIbbAcUqg==",
   "success": true,
   "projectFilePath": "E:\\dev\\NoHornDragon_Server\\NHDServer\\NHDServer\\NHDServer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\husk3\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }
