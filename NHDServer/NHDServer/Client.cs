@@ -51,7 +51,7 @@ namespace NHDServer
 
                 stream.BeginRead(receiveBuffer, 0, dataBuferSize, ReceiveCallback, null);
 
-                // TODO : send welcome packet
+                // send welcome packet
                 ServerSend.Welcome(id, "Welcome to NoHornDragon server");
             }
 
@@ -79,7 +79,7 @@ namespace NHDServer
                     int byteLength = stream.EndRead(result);
                     if(byteLength <= 0)
                     {
-                        // TODO : disconnect
+                        Server.clients[id].Disconnect();
                         return;
                     }
 
@@ -93,7 +93,7 @@ namespace NHDServer
                 catch(Exception ex)
                 {
                     Console.WriteLine($"Error receiving TCP data : {ex}");
-                    // TODO : disconnect
+                    Server.clients[id].Disconnect();
 
                 }
             }
@@ -141,6 +141,14 @@ namespace NHDServer
                 return false;
             }
 
+            public void Disconnect()
+            {
+                socket.Close();
+                stream = null;
+                receiveBuffer = null;
+                receivedData = null;
+                socket = null;
+            }
         }
 
 
@@ -178,6 +186,11 @@ namespace NHDServer
                     }
                 });
             }
+
+            public void Disconnect()
+            {
+                endPoint = null;
+            }
         }
 
         public void SendIntoGame(string _playerName)
@@ -204,6 +217,16 @@ namespace NHDServer
                     
                 }
             }
+        }
+
+        private void Disconnect()
+        {
+            Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected");
+
+            player = null;
+
+            tcp.Disconnect();
+            udp.Disconnect();
         }
     }
 }

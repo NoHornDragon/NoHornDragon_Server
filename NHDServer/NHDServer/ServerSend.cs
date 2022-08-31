@@ -93,7 +93,6 @@ namespace NHDServer
                 packet.Write(_player.id);
                 packet.Write(_player.position);
 
-                Console.WriteLine($"{_player.id} position is {_player.position}");
                 SendUDPDataToAll(packet);
             }
         }
